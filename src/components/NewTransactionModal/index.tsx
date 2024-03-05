@@ -13,32 +13,33 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import {} from "../../pages/Transaction";
 import { TransactionContext } from "../../contexts/TransactionContext";
+2;
 
 export function NewTransactionModal() {
-  const { addTransaction, isFormOpen, setFormOpen } =
-    useContext(TransactionContext);
+  const {
+    addTransaction,
+    isFormOpen,
+    setFormOpen,
+    transactionDate,
+    setTransactionDate,
+  } = useContext(TransactionContext);
 
   const [transactionDescription, setTransactionDescription] = useState("");
   const [transactionAmount, setTransactionAmount] = useState("");
   const [transactionCategory, setTransactionCategory] = useState("");
   const [transactionType, setTransactionType] = useState("");
-  const [transactionDate, setTransactionDate] = useState(new Date());
 
-  const handleTransactionDate = (date: Date) => {
-    setTransactionDate(date);
-  };
+  const formattedDate = new Date(transactionDate).toLocaleDateString("pt-BR");
 
   const handleCreateNewTransaction = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    handleTransactionDate(transactionDate);
 
     const transactionData = {
       description: transactionDescription,
       amount: transactionAmount,
       category: transactionCategory,
       type: transactionType,
-      date: transactionDate,
+      date: formattedDate,
     };
 
     try {

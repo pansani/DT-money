@@ -45,7 +45,7 @@ export function Transactions() {
                   </PriceHighlight>
                 </td>
                 <td>{transaction.category}</td>
-                <td>{transaction.date}</td>
+                <td>{transaction.date.toString()}</td>
               </tr>
             ))}
           </tbody>

@@ -6,12 +6,14 @@ interface Transaction {
   type: "income" | "outcome";
   amount: number;
   category: string;
-  date: string;
+  date: Date;
 }
 
 interface TransactionContextType {
   transactions: Transaction[];
   isFormOpen: boolean;
+  transactionDate: Date;
+  setTransactionDate: React.Dispatch<React.SetStateAction<Date>>;
   setFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
   addTransaction: (transaction: Transaction) => void;
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
@@ -26,6 +28,7 @@ export function TransactionProvider({
 }) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isFormOpen, setFormOpen] = useState(true);
+  const [transactionDate, setTransactionDate] = useState(new Date());
 
   const addTransaction = (transaction: Transaction) => {
     setTransactions((prevTransactions) => [...prevTransactions, transaction]);
@@ -36,6 +39,8 @@ export function TransactionProvider({
       value={{
         transactions,
         isFormOpen,
+        transactionDate,
+        setTransactionDate,
         addTransaction,
         setTransactions,
         setFormOpen,

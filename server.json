@@ -1,28 +1,3 @@
 {
-  "transaçoes": [
-    {
-      "id": "9bb5",
-      "description": "Salario",
-      "amount": 12000,
-      "category": "Salario",
-      "type": "income",
-      "date": "2024-03-05T02:51:58.243Z"
-    },
-    {
-      "id": "8fff",
-      "description": "Salario",
-      "amount": 12000,
-      "category": "Salario",
-      "type": "income",
-      "date": "2024-03-05T02:51:58.243Z"
-    },
-    {
-      "id": "c27c",
-      "description": "Aluguel",
-      "amount": "1000",
-      "category": "Moradia",
-      "type": "outcome",
-      "date": "2024-03-05T02:53:26.597Z"
-    }
-  ]
+  "transaçoes": []
 }
