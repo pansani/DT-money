@@ -44,7 +44,7 @@ export function TransactionProvider({
   useEffect(() => {
     async function fetchTransactions() {
       try {
-        const response = await axios.get("http://localhost:3000/transacoes");
+        const response = await axios.get("http://localhost:3000/transactions");
         setTransactions(response.data);
       } catch (error) {
         console.error("Erro ao buscar transações:", error);
@@ -80,9 +80,6 @@ export function TransactionProvider({
   };
 
   const total = transactionAmountIncome - transactionAmountOutcome;
-  console.log(total);
-  console.log(transactionAmountIncome);
-  console.log(transactionAmountOutcome);
 
   return (
     <TransactionContext.Provider

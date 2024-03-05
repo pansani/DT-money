@@ -17,7 +17,7 @@ export function Transactions() {
   useEffect(() => {
     async function fetchTransactions() {
       try {
-        const response = await axios.get("http://localhost:3000/transaçoes");
+        const response = await axios.get("http://localhost:3000/transactions");
         setTransactions(response.data);
       } catch (error) {
         console.error("Erro ao buscar transações:", error);

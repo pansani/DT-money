@@ -37,21 +37,23 @@ export function NewTransactionModal() {
   const handleCreateNewTransaction: SubmitHandler<NewTransactionData> = async (
     data
   ) => {
-    calculateTotal(transactionType as "income" | "outcome");
-
-    console.log(typeof data.amount);
+    const amount = parseFloat(data.amount.toString());
 
     const transactionData = {
       description: data.description,
-      amount: data.amount,
+      amount: amount,
       category: data.category,
       type: transactionType,
       date: formattedDate,
     };
 
+    calculateTotal(transactionType as "income" | "outcome");
+
+    console.log(typeof data.amount);
+
     try {
       const response = await axios.post(
-        "http://localhost:3000/transaçoes",
+        "http://localhost:3000/transactions",
         transactionData
       );
       console.log("Transação criada com sucesso!");

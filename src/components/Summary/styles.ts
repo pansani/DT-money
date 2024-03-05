@@ -44,7 +44,12 @@ export const SummaryContainer = styled.section<PriceHighlightProps>`
         props.variant === "income"
           ? props.theme["green-300"]
           : props.theme["red-500"]};
+
+      color: ${(props) => props.theme.white};
+
+      span {
+        color: ${(props) => props.theme.white};
+      }
     }
-    color: ${(props) => props.theme.white};
   }
 `;
