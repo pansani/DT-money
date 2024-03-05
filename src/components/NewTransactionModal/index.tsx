@@ -1,4 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
+import {} from "@radix-ui/react-dialog";
+
 import {
   CloseButton,
   Content,
@@ -13,12 +15,11 @@ import {} from "../../pages/Transaction";
 import { TransactionContext } from "../../contexts/TransactionContext";
 
 export function NewTransactionModal() {
-  const { addTransaction } = useContext(TransactionContext);
-
-  const [isFormOpen, setIsFormOpen] = useState(true);
+  const { addTransaction, isFormOpen, setFormOpen } =
+    useContext(TransactionContext);
 
   const [transactionDescription, setTransactionDescription] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState(0);
+  const [transactionAmount, setTransactionAmount] = useState("");
   const [transactionCategory, setTransactionCategory] = useState("");
   const [transactionType, setTransactionType] = useState("");
   const [transactionDate, setTransactionDate] = useState(new Date());
@@ -28,8 +29,9 @@ export function NewTransactionModal() {
   };
 
   const handleCreateNewTransaction = async (event: React.FormEvent) => {
-    handleTransactionDate;
     event.preventDefault();
+
+    handleTransactionDate(transactionDate);
 
     const transactionData = {
       description: transactionDescription,
@@ -47,10 +49,17 @@ export function NewTransactionModal() {
       console.log("Transação criada com sucesso!");
       console.log(response.data);
       addTransaction(response.data);
-      setIsFormOpen(false);
     } catch (error) {
       console.error(error);
     }
+
+    setTransactionDescription("");
+    setTransactionAmount("");
+    setTransactionCategory("");
+    setTransactionType("");
+    setTransactionDate(new Date());
+
+    setFormOpen(false);
   };
 
   const handleTransactionType = (type: "income" | "outcome") => {
@@ -61,7 +70,7 @@ export function NewTransactionModal() {
     setTransactionDescription(description);
   };
 
-  const handleTransactionAmount = (amount: number) => {
+  const handleTransactionAmount = (amount: string) => {
     setTransactionAmount(amount);
   };
 
@@ -93,7 +102,7 @@ export function NewTransactionModal() {
                 required
                 value={transactionAmount}
                 onChange={(event) =>
-                  handleTransactionAmount(Number(event.target.value))
+                  handleTransactionAmount(event.target.value)
                 }
               />
               <input
@@ -129,7 +138,7 @@ export function NewTransactionModal() {
             </form>
           </Content>
         </Dialog.Portal>
-      )}{" "}
+      )}
     </>
   );
 }

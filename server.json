@@ -1,20 +1,28 @@
 {
   "transaçoes": [
     {
-      "id": "02cf",
-      "description": "Desenvolvimento Web",
-      "amount": 1200,
-      "category": "Vendas",
+      "id": "9bb5",
+      "description": "Salario",
+      "amount": 12000,
+      "category": "Salario",
       "type": "income",
-      "date": "2024-03-05T00:57:46.680Z"
+      "date": "2024-03-05T02:51:58.243Z"
     },
     {
-      "id": "6149",
+      "id": "8fff",
+      "description": "Salario",
+      "amount": 12000,
+      "category": "Salario",
+      "type": "income",
+      "date": "2024-03-05T02:51:58.243Z"
+    },
+    {
+      "id": "c27c",
       "description": "Aluguel",
-      "amount": 1100,
-      "category": "Domestico",
+      "amount": "1000",
+      "category": "Moradia",
       "type": "outcome",
-      "date": "2024-03-05T00:59:05.371Z"
+      "date": "2024-03-05T02:53:26.597Z"
     }
   ]
 }

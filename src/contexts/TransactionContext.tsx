@@ -11,6 +11,8 @@ interface Transaction {
 
 interface TransactionContextType {
   transactions: Transaction[];
+  isFormOpen: boolean;
+  setFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
   addTransaction: (transaction: Transaction) => void;
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
 }
@@ -23,6 +25,7 @@ export function TransactionProvider({
   children: React.ReactNode;
 }) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [isFormOpen, setFormOpen] = useState(true);
 
   const addTransaction = (transaction: Transaction) => {
     setTransactions((prevTransactions) => [...prevTransactions, transaction]);
@@ -30,7 +33,13 @@ export function TransactionProvider({
 
   return (
     <TransactionContext.Provider
-      value={{ transactions, addTransaction, setTransactions }}
+      value={{
+        transactions,
+        isFormOpen,
+        addTransaction,
+        setTransactions,
+        setFormOpen,
+      }}
     >
       {children}
     </TransactionContext.Provider>
