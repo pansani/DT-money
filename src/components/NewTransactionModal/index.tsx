@@ -17,15 +17,16 @@ import { TransactionContext } from "../../contexts/TransactionContext";
 
 export function NewTransactionModal() {
   const {
-    addTransaction,
     isFormOpen,
-    setFormOpen,
     transactionDate,
+    addTransaction,
+    setFormOpen,
     setTransactionDate,
+    calculateTotal,
   } = useContext(TransactionContext);
 
   const [transactionDescription, setTransactionDescription] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState("");
+  const [transactionAmount, setTransactionAmount] = useState(0);
   const [transactionCategory, setTransactionCategory] = useState("");
   const [transactionType, setTransactionType] = useState("");
 
@@ -33,6 +34,7 @@ export function NewTransactionModal() {
 
   const handleCreateNewTransaction = async (event: React.FormEvent) => {
     event.preventDefault();
+    calculateTotal(transactionType as "income" | "outcome");
 
     const transactionData = {
       description: transactionDescription,
@@ -55,7 +57,7 @@ export function NewTransactionModal() {
     }
 
     setTransactionDescription("");
-    setTransactionAmount("");
+    setTransactionAmount(0);
     setTransactionCategory("");
     setTransactionType("");
     setTransactionDate(new Date());
@@ -71,7 +73,7 @@ export function NewTransactionModal() {
     setTransactionDescription(description);
   };
 
-  const handleTransactionAmount = (amount: string) => {
+  const handleTransactionAmount = (amount: number) => {
     setTransactionAmount(amount);
   };
 
@@ -103,7 +105,7 @@ export function NewTransactionModal() {
                 required
                 value={transactionAmount}
                 onChange={(event) =>
-                  handleTransactionAmount(event.target.value)
+                  handleTransactionAmount(Number(event.target.value))
                 }
               />
               <input

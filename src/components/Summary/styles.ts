@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const SummaryContainer = styled.section`
+interface PriceHighlightProps {
+  variant: "income" | "outcome";
+}
+
+export const SummaryContainer = styled.section<PriceHighlightProps>`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
@@ -36,8 +40,11 @@ export const SummaryContainer = styled.section`
     }
 
     &.highlight-background {
-      background-color: ${(props) => props.theme["green-500"]};
-      color: ${(props) => props.theme.white};
+      background-color: ${(props) =>
+        props.variant === "income"
+          ? props.theme["green-300"]
+          : props.theme["red-500"]};
     }
+    color: ${(props) => props.theme.white};
   }
 `;
