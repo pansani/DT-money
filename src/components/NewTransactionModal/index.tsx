@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import {} from "@radix-ui/react-dialog";
+import { useForm, SubmitHandler } from "react-hook-form"; // Import react-hook-form
 
 import {
   CloseButton,
@@ -11,9 +11,13 @@ import {
 import { ArrowCircleDown, ArrowCircleUp } from "@phosphor-icons/react";
 import { useContext, useState } from "react";
 import axios from "axios";
-import {} from "../../pages/Transaction";
 import { TransactionContext } from "../../contexts/TransactionContext";
-2;
+
+interface NewTransactionData {
+  description: string;
+  amount: number;
+  category: string;
+}
 
 export function NewTransactionModal() {
   const {
@@ -21,25 +25,26 @@ export function NewTransactionModal() {
     transactionDate,
     addTransaction,
     setFormOpen,
-    setTransactionDate,
     calculateTotal,
   } = useContext(TransactionContext);
 
-  const [transactionDescription, setTransactionDescription] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState(0);
-  const [transactionCategory, setTransactionCategory] = useState("");
+  const { register, handleSubmit, reset } = useForm<NewTransactionData>();
+
   const [transactionType, setTransactionType] = useState("");
 
   const formattedDate = new Date(transactionDate).toLocaleDateString("pt-BR");
 
-  const handleCreateNewTransaction = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleCreateNewTransaction: SubmitHandler<NewTransactionData> = async (
+    data
+  ) => {
     calculateTotal(transactionType as "income" | "outcome");
 
+    console.log(typeof data.amount);
+
     const transactionData = {
-      description: transactionDescription,
-      amount: transactionAmount,
-      category: transactionCategory,
+      description: data.description,
+      amount: data.amount,
+      category: data.category,
       type: transactionType,
       date: formattedDate,
     };
@@ -56,29 +61,13 @@ export function NewTransactionModal() {
       console.error(error);
     }
 
-    setTransactionDescription("");
-    setTransactionAmount(0);
-    setTransactionCategory("");
-    setTransactionType("");
-    setTransactionDate(new Date());
+    reset();
 
     setFormOpen(false);
   };
 
   const handleTransactionType = (type: "income" | "outcome") => {
     setTransactionType(type);
-  };
-
-  const handleTransactionDescription = (description: string) => {
-    setTransactionDescription(description);
-  };
-
-  const handleTransactionAmount = (amount: number) => {
-    setTransactionAmount(amount);
-  };
-
-  const handleTransactionCategory = (category: string) => {
-    setTransactionCategory(category);
   };
 
   return (
@@ -89,33 +78,25 @@ export function NewTransactionModal() {
           <Content>
             <Dialog.Title>Nova Transação</Dialog.Title>
             <CloseButton>X</CloseButton>
-            <form onSubmit={handleCreateNewTransaction}>
+            <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
               <input
                 type="text"
                 placeholder="Descrição"
                 required
-                value={transactionDescription}
-                onChange={(event) =>
-                  handleTransactionDescription(event.target.value)
-                }
+                {...register("description")}
               />
               <input
                 type="number"
+                inputMode="numeric"
                 placeholder="Preço"
                 required
-                value={transactionAmount}
-                onChange={(event) =>
-                  handleTransactionAmount(Number(event.target.value))
-                }
+                {...register("amount")}
               />
               <input
                 type="text"
                 placeholder="Categoria"
                 required
-                value={transactionCategory}
-                onChange={(event) =>
-                  handleTransactionCategory(event.target.value)
-                }
+                {...register("category")}
               />
 
               <TransactionType>

@@ -80,6 +80,9 @@ export function TransactionProvider({
   };
 
   const total = transactionAmountIncome - transactionAmountOutcome;
+  console.log(total);
+  console.log(transactionAmountIncome);
+  console.log(transactionAmountOutcome);
 
   return (
     <TransactionContext.Provider
