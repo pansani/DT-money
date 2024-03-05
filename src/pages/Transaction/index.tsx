@@ -7,7 +7,26 @@ import {
   TransactionsTable,
 } from "./styles";
 
+import { useEffect, useContext } from "react";
+import axios from "axios";
+import { TransactionContext } from "../../contexts/TransactionContext";
+
 export function Transactions() {
+  const { transactions, setTransactions } = useContext(TransactionContext);
+
+  useEffect(() => {
+    async function fetchTransactions() {
+      try {
+        const response = await axios.get("http://localhost:3000/transaçoes");
+        setTransactions(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar transações:", error);
+      }
+    }
+
+    fetchTransactions();
+  }, [setTransactions]);
+
   return (
     <div>
       <Header />
@@ -17,22 +36,18 @@ export function Transactions() {
         <SearchForm />
         <TransactionsTable>
           <tbody>
-            <tr>
-              <td>Desenvolvimento de website</td>
-              <td className="deposit">
-                <PriceHighlight variant="income">R$ 12.000</PriceHighlight>
-              </td>
-              <td>Desenvolvimento</td>
-              <td>20/02/2021</td>
-            </tr>
-            <tr>
-              <td>Aluguel</td>
-              <td className="withdraw">
-                <PriceHighlight variant="outcome">- R$ 1.100</PriceHighlight>
-              </td>
-              <td>Casa</td>
-              <td>17/02/2021</td>
-            </tr>
+            {transactions.map((transaction) => (
+              <tr key={transaction.id}>
+                <td>{transaction.description}</td>
+                <td className={transaction.type}>
+                  <PriceHighlight variant={transaction.type}>
+                    R${transaction.amount}
+                  </PriceHighlight>
+                </td>
+                <td>{transaction.category}</td>
+                <td>{transaction.date}</td>
+              </tr>
+            ))}
           </tbody>
         </TransactionsTable>
       </TransactionContainer>

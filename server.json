@@ -1,0 +1,20 @@
+{
+  "transaçoes": [
+    {
+      "id": "02cf",
+      "description": "Desenvolvimento Web",
+      "amount": 1200,
+      "category": "Vendas",
+      "type": "income",
+      "date": "2024-03-05T00:57:46.680Z"
+    },
+    {
+      "id": "6149",
+      "description": "Aluguel",
+      "amount": 1100,
+      "category": "Domestico",
+      "type": "outcome",
+      "date": "2024-03-05T00:59:05.371Z"
+    }
+  ]
+}
