@@ -31,7 +31,7 @@ export function NewTransactionModal() {
     handleTransactionDate;
     event.preventDefault();
 
-    const data = {
+    const transactionData = {
       description: transactionDescription,
       amount: transactionAmount,
       category: transactionCategory,
@@ -42,7 +42,7 @@ export function NewTransactionModal() {
     try {
       const response = await axios.post(
         "http://localhost:3000/transaçoes",
-        data
+        transactionData
       );
       console.log("Transação criada com sucesso!");
       console.log(response.data);
@@ -76,7 +76,7 @@ export function NewTransactionModal() {
           <Overlay />
           <Content>
             <Dialog.Title>Nova Transação</Dialog.Title>
-            <CloseButton>X</CloseButton>(
+            <CloseButton>X</CloseButton>
             <form onSubmit={handleCreateNewTransaction}>
               <input
                 type="text"
@@ -127,7 +127,6 @@ export function NewTransactionModal() {
 
               <button type="submit">Cadastrar</button>
             </form>
-            )
           </Content>
         </Dialog.Portal>
       )}{" "}

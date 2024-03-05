@@ -15,11 +15,7 @@ interface TransactionContextType {
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
 }
 
-export const TransactionContext = createContext<TransactionContextType>({
-  transactions: [],
-  addTransaction: () => {},
-  setTransactions: () => {},
-});
+export const TransactionContext = createContext({} as TransactionContextType);
 
 export function TransactionProvider({
   children,
