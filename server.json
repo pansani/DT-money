@@ -1,3 +1,28 @@
 {
-  "transactions": []
+  "transactions": [
+    {
+      "id": "8587",
+      "description": "Salário",
+      "amount": 12000,
+      "category": "Trabalho",
+      "type": "income",
+      "date": "06/03/2024"
+    },
+    {
+      "id": "d2b4",
+      "description": "Aluguel",
+      "amount": 1000,
+      "category": "Moradia",
+      "type": "outcome",
+      "date": "06/03/2024"
+    },
+    {
+      "id": "f4a2",
+      "description": "Togurada sincera",
+      "amount": 1000,
+      "category": "Lazer",
+      "type": "outcome",
+      "date": "06/03/2024"
+    }
+  ]
 }

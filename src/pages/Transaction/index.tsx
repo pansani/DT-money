@@ -10,6 +10,7 @@ import {
 import { useEffect, useContext } from "react";
 import axios from "axios";
 import { TransactionContext } from "../../contexts/TransactionContext";
+import { priceFormatter } from "../../utils/formatter";
 
 export function Transactions() {
   const { transactions, setTransactions } = useContext(TransactionContext);
@@ -41,7 +42,8 @@ export function Transactions() {
                 <td>{transaction.description}</td>
                 <td className={transaction.type}>
                   <PriceHighlight variant={transaction.type}>
-                    R${transaction.amount}
+                    {transaction.type === "outcome" && "- "}
+                    {priceFormatter.format(transaction.amount)}
                   </PriceHighlight>
                 </td>
                 <td>{transaction.category}</td>

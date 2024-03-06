@@ -42,7 +42,7 @@ export const SummaryContainer = styled.section<PriceHighlightProps>`
     &.highlight-background {
       background-color: ${(props) =>
         props.variant === "income"
-          ? props.theme["green-300"]
+          ? props.theme["green-500"]
           : props.theme["red-500"]};
 
       color: ${(props) => props.theme.white};

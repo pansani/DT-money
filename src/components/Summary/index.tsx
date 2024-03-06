@@ -1,24 +1,32 @@
 import { ArrowCircleUp, CurrencyDollar } from "@phosphor-icons/react";
 import { SummaryContainer } from "./styles";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { TransactionContext } from "../../contexts/TransactionContext";
+import { priceFormatter } from "../../utils/formatter";
 
 export function Summary() {
-  const {
-    transactionAmountIncome,
-    transactionAmountOutcome,
-    transactionAmountTotal,
-  } = useContext(TransactionContext);
+  const { transactions } = useContext(TransactionContext);
 
   const [variant, setVariant] = useState<"income" | "outcome">("income");
 
-  useEffect(() => {
-    if (transactionAmountTotal < 0) {
-      setVariant("outcome");
-    } else {
-      setVariant("income");
+  const summary = transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.type === "income") {
+        acc.income += transaction.amount;
+        acc.total += transaction.amount;
+      } else {
+        acc.outcome += transaction.amount;
+        acc.total -= transaction.amount;
+      }
+
+      return acc;
+    },
+    {
+      income: 0,
+      outcome: 0,
+      total: 0,
     }
-  }, [transactionAmountTotal]);
+  );
 
   return (
     <SummaryContainer variant={variant}>
@@ -27,21 +35,21 @@ export function Summary() {
           <span>Entradas</span>
           <ArrowCircleUp size={32} color="#00b37e" />
         </header>
-        <strong>R${transactionAmountIncome}</strong>
+        <strong>{priceFormatter.format(summary.income)}</strong>
       </div>
       <div>
         <header>
           <span>Saidas</span>
           <ArrowCircleUp size={32} color="#f75a68" />
         </header>
-        <strong>R${transactionAmountOutcome}</strong>
+        <strong>{priceFormatter.format(summary.outcome)}</strong>
       </div>
       <div className="highlight-background">
         <header>
           <span>Total</span>
           <CurrencyDollar size={32} color="#fff" />
         </header>
-        <strong>R${transactionAmountTotal}</strong>
+        <strong>{priceFormatter.format(summary.total)}</strong>
       </div>
     </SummaryContainer>
   );

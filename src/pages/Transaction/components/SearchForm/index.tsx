@@ -1,36 +1,35 @@
 import { useContext, useEffect, useState } from "react";
 import { SearchFormContainer } from "./styles";
-import axios from "axios";
 import { TransactionContext } from "../../../../contexts/TransactionContext";
 
 export function SearchForm() {
-  const { setTransactions } = useContext(TransactionContext);
+  const { transactions, setTransactions } = useContext(TransactionContext);
+  const [allTransactions, setAllTransactions] = useState(transactions);
+  const [searchValue, setSearchValue] = useState<string>("");
 
-  const [searchValue, setSearchValue] = useState("");
+  useEffect(() => {
+    setAllTransactions(transactions);
+  }, [transactions]);
 
   const handleChangeSearchValue = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSearchValue(event.target.value);
-  };
+    const value = event.target.value;
+    setSearchValue(value);
 
-  //Fix this useEffect to fetch transactions with the searchValue
-
-  useEffect(() => {
-    async function fetchTransactions() {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/transactions?description_like=${searchValue}`
-        );
-        setTransactions(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching transactions:", error);
-      }
+    if (!value.trim()) {
+      setTransactions(allTransactions);
+      return;
     }
-    fetchTransactions();
+
+    const filteredTransactions = allTransactions.filter((transaction) =>
+      transaction.description.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    setTransactions(filteredTransactions);
+    console.log(filteredTransactions);
     console.log(searchValue);
-  }, [searchValue]);
+  };
 
   return (
     <SearchFormContainer>

@@ -20,13 +20,8 @@ interface NewTransactionData {
 }
 
 export function NewTransactionModal() {
-  const {
-    isFormOpen,
-    transactionDate,
-    addTransaction,
-    setFormOpen,
-    calculateTotal,
-  } = useContext(TransactionContext);
+  const { isFormOpen, transactionDate, addTransaction, setFormOpen } =
+    useContext(TransactionContext);
 
   const { register, handleSubmit, reset } = useForm<NewTransactionData>();
 
@@ -46,8 +41,6 @@ export function NewTransactionModal() {
       type: transactionType,
       date: formattedDate,
     };
-
-    calculateTotal(transactionType as "income" | "outcome");
 
     console.log(typeof data.amount);
 
