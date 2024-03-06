@@ -17,14 +17,6 @@
       "date": "06/03/2024"
     },
     {
-      "id": "f4a2",
-      "description": "Togurada sincera",
-      "amount": 1000,
-      "category": "Lazer",
-      "type": "outcome",
-      "date": "06/03/2024"
-    },
-    {
       "id": "06a8",
       "description": "Conta de luz",
       "amount": 480,
@@ -65,10 +57,10 @@
       "date": "06/03/2024"
     },
     {
-      "id": "7faa",
-      "description": "dscs",
-      "amount": 520,
-      "category": "fdsf",
+      "id": "2a02",
+      "description": "Conserto Carro",
+      "amount": 3000,
+      "category": "Automovel",
       "type": "outcome",
       "date": "06/03/2024"
     }

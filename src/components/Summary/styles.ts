@@ -17,6 +17,11 @@ export const SummaryContainer = styled.section<PriceHighlightProps>`
   padding: 0 1.5em;
 
   margin-top: -5rem;
+  @media (max-width: 720px) {
+    overflow-x: auto;
+    display: flex;
+    flex-wrap: nowrap;
+  }
 
   div {
     background-color: ${(props) => props.theme["gray-600"]};

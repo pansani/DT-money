@@ -17,8 +17,16 @@ export const HeaderContent = styled.div`
 
   padding: 0 1.5em;
 
+  @media (max-width: 720px) {
+    padding: 0 2.5rem;
+  }
+
   img {
     max-height: 45px;
+
+    @media (max-width: 720px) {
+      height: 25px;
+    }
   }
 
   button {
@@ -41,6 +49,14 @@ export const HeaderContent = styled.div`
 
     &:hover {
       filter: brightness(0.9);
+    }
+
+    @media (max-width: 720px) {
+      width: 130px;
+      height: 35px;
+      font-size: 13px;
+
+      padding: 0;
     }
   }
 `;
