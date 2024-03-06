@@ -8,9 +8,9 @@ import {
 } from "./styles";
 
 import { useEffect, useContext } from "react";
-import axios from "axios";
 import { TransactionContext } from "../../contexts/TransactionContext";
 import { priceFormatter } from "../../utils/formatter";
+import { api } from "../../lib/axios";
 
 export function Transactions() {
   const { transactions, setTransactions } = useContext(TransactionContext);
@@ -18,7 +18,7 @@ export function Transactions() {
   useEffect(() => {
     async function fetchTransactions() {
       try {
-        const response = await axios.get("http://localhost:3000/transactions");
+        const response = await api.get("transactions");
         setTransactions(response.data);
       } catch (error) {
         console.error("Erro ao buscar transações:", error);

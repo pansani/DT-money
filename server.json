@@ -23,6 +23,54 @@
       "category": "Lazer",
       "type": "outcome",
       "date": "06/03/2024"
+    },
+    {
+      "id": "06a8",
+      "description": "Conta de luz",
+      "amount": 480,
+      "category": "Moradia",
+      "type": "outcome",
+      "date": "06/03/2024"
+    },
+    {
+      "id": "d8b2",
+      "description": "Carro novo",
+      "amount": 40000,
+      "category": "Automovel",
+      "type": "outcome",
+      "date": "06/03/2024"
+    },
+    {
+      "id": "29aa",
+      "description": "Investimento Cripto",
+      "amount": 50000,
+      "category": "Investimento",
+      "type": "income",
+      "date": "06/03/2024"
+    },
+    {
+      "id": "7f5a",
+      "description": "Freelance App",
+      "amount": 2000,
+      "category": "Freela",
+      "type": "income",
+      "date": "06/03/2024"
+    },
+    {
+      "id": "936e",
+      "description": "Conta energia",
+      "amount": 1000,
+      "category": "Moradia",
+      "type": "outcome",
+      "date": "06/03/2024"
+    },
+    {
+      "id": "7faa",
+      "description": "dscs",
+      "amount": 520,
+      "category": "fdsf",
+      "type": "outcome",
+      "date": "06/03/2024"
     }
   ]
 }

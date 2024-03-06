@@ -10,8 +10,8 @@ import {
 } from "./styles";
 import { ArrowCircleDown, ArrowCircleUp } from "@phosphor-icons/react";
 import { useContext, useState } from "react";
-import axios from "axios";
 import { TransactionContext } from "../../contexts/TransactionContext";
+import { api } from "../../lib/axios";
 
 interface NewTransactionData {
   description: string;
@@ -45,10 +45,7 @@ export function NewTransactionModal() {
     console.log(typeof data.amount);
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/transactions",
-        transactionData
-      );
+      const response = await api.post("transactions", transactionData);
       console.log("Transação criada com sucesso!");
       console.log(response.data);
       addTransaction(response.data);

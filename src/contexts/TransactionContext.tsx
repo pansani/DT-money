@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
 interface Transaction {
   id: number;
@@ -18,6 +18,7 @@ interface TransactionContextType {
   setFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
   addTransaction: (transaction: Transaction) => void;
   setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
+  fetchTransactions: (query?: string) => Promise<void>;
 }
 
 export const TransactionContext = createContext({} as TransactionContextType);
@@ -35,18 +36,25 @@ export function TransactionProvider({
     setTransactions((prevTransactions) => [...prevTransactions, transaction]);
   };
 
-  useEffect(() => {
-    async function fetchTransactions() {
-      try {
-        const response = await axios.get("http://localhost:3000/transactions");
-        setTransactions(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar transações:", error);
-      }
+  async function fetchTransactions(query?: string) {
+    const response = await api.get("transactions");
+    let filteredTransactions = response.data;
+
+    if (query) {
+      query = query.toLowerCase();
+      filteredTransactions = filteredTransactions.filter(
+        (transaction: {
+          description: { toLowerCase: () => (string | undefined)[] };
+        }) => transaction.description.toLowerCase().includes(query)
+      );
     }
 
+    setTransactions(filteredTransactions);
+  }
+
+  useEffect(() => {
     fetchTransactions();
-  }, [setTransactions]);
+  }, []);
 
   return (
     <TransactionContext.Provider
@@ -58,6 +66,7 @@ export function TransactionProvider({
         addTransaction,
         setTransactions,
         setFormOpen,
+        fetchTransactions,
       }}
     >
       {children}

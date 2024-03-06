@@ -1,45 +1,41 @@
-import { useContext, useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { SearchFormContainer } from "./styles";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { useContext } from "react";
 import { TransactionContext } from "../../../../contexts/TransactionContext";
 
+const searchFormSchema = z.object({
+  query: z.string(),
+});
+
+type SearchFormInputs = z.infer<typeof searchFormSchema>;
+
 export function SearchForm() {
-  const { transactions, setTransactions } = useContext(TransactionContext);
-  const [allTransactions, setAllTransactions] = useState(transactions);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const { fetchTransactions } = useContext(TransactionContext);
 
-  useEffect(() => {
-    setAllTransactions(transactions);
-  }, [transactions]);
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SearchFormInputs>({
+    resolver: zodResolver(searchFormSchema),
+  });
 
-  const handleChangeSearchValue = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    setSearchValue(value);
-
-    if (!value.trim()) {
-      setTransactions(allTransactions);
-      return;
-    }
-
-    const filteredTransactions = allTransactions.filter((transaction) =>
-      transaction.description.toLowerCase().includes(searchValue.toLowerCase())
-    );
-
-    setTransactions(filteredTransactions);
-    console.log(filteredTransactions);
-    console.log(searchValue);
-  };
+  async function handleSearchTransactions(data: SearchFormInputs) {
+    await fetchTransactions(data.query);
+  }
 
   return (
-    <SearchFormContainer>
+    <SearchFormContainer onSubmit={handleSubmit(handleSearchTransactions)}>
       <input
         type="text"
         placeholder="Buscar por título"
-        value={searchValue}
-        onChange={handleChangeSearchValue}
+        {...register("query")}
       />
-      <button type="submit">Buscar</button>
+      <button type="submit" disabled={isSubmitting}>
+        Buscar
+      </button>
     </SearchFormContainer>
   );
 }

@@ -28,8 +28,14 @@ export const SearchFormContainer = styled.form`
     font-size: 1rem;
     font-weight: bold;
     transition: filter 0.2s;
+    cursor: pointer;
 
-    &:hover {
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
       filter: brightness(0.9);
     }
   }

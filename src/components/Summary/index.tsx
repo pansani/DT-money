@@ -1,6 +1,6 @@
 import { ArrowCircleUp, CurrencyDollar } from "@phosphor-icons/react";
 import { SummaryContainer } from "./styles";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TransactionContext } from "../../contexts/TransactionContext";
 import { priceFormatter } from "../../utils/formatter";
 
@@ -27,6 +27,14 @@ export function Summary() {
       total: 0,
     }
   );
+
+  useEffect(() => {
+    if (summary.total >= 0) {
+      setVariant("income");
+    } else {
+      setVariant("outcome");
+    }
+  }, [transactions]);
 
   return (
     <SummaryContainer variant={variant}>
