@@ -15,6 +15,8 @@ import { api } from "../../lib/axios";
 
 export function Transactions() {
   const { transactions, setTransactions } = useContext(TransactionContext);
+  const [filteredTransactions, setFilteredTransactions] =
+    useState(transactions);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -23,6 +25,18 @@ export function Transactions() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    setFilteredTransactions(transactions);
+  }, [transactions]);
+
+  const handleSearch = (query: string) => {
+    const lowerCaseQuery = query.toLowerCase();
+    const filtered = transactions.filter((transaction) =>
+      transaction.description.toLowerCase().includes(lowerCaseQuery)
+    );
+    setFilteredTransactions(filtered);
+  };
 
   useEffect(() => {
     async function fetchTransactions() {
@@ -44,10 +58,10 @@ export function Transactions() {
 
       <TransactionContainer>
         <h3>Transações</h3>
-        <SearchForm />
+        <SearchForm onSearch={handleSearch} />
         <TransactionsTable>
           <tbody>
-            {transactions.map((transaction) => (
+            {filteredTransactions.map((transaction) => (
               <tr key={transaction.id}>
                 <td>{transaction.description}</td>
                 <td className={transaction.type}>
